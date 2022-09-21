@@ -1,13 +1,122 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+/* homepage css rules */
+.homepage-main-container {
+  margin: 50px 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* align-items: center; */
+}
+
+.logout-link {
+  align-self: flex-end;
+}
+
+.player-cards-list {
+  margin: 0;
+  padding: 0;
+  margin-top: 100px;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 75px;
+}
+
+.player-card-items {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.player-stats-list {
+  margin: 0;
+  padding: 0;
+  align-items: flex-start;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+/* addplayers page css rules  */
+.addplayer-form {
+  align-self: center;
+}
+
+/* login page css rules  */
+
+.loginpage-main-container {
+  text-align: center;
+  background: url("../src/images/login-photo.jpg") no-repeat center fixed;
+  background-size: cover;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+/* .loginpage-main-container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  background-image: url("../src/images/login-photo.jpg");
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  margin: auto;
+} */
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 400px;
+}
+
+.login-input {
+  border: none;
+  border-radius: 10px;
+  width: 100%;
+  height: 80px;
+  text-align: center;
+  background-color: #4169e163;
+  opacity: 100%;
+}
+
+.login-input:focus {
+  color: white;
+  outline: 0.1rem solid white;
+}
+
+.login-input::placeholder {
+  color: white;
+}
+
+.login-button {
+  margin-top: 5px;
+  border: none;
+  border-radius: 5px;
+  width: 200px;
+  height: 50px;
+  color: white;
+  align-self: center;
+  background-color: #1746d5d1;
 }
