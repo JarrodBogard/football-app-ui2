@@ -1,9 +1,10 @@
 import { useState, useContext } from "react";
 import { AppContext } from "../contexts/AppContext";
 import { Link, useNavigate } from "react-router-dom";
+import Navigation from "./Navigation";
 
 const Login = () => {
-  const { users, setLogId, checkPlayers } = useContext(AppContext);
+  const { users, logUser, setLogId, checkPlayers } = useContext(AppContext);
   const navigate = useNavigate();
   const [state, setState] = useState({
     loginName: "",
@@ -27,7 +28,7 @@ const Login = () => {
     console.log(id);
 
     if (loggedUser) {
-      //   logUser();
+      logUser();
       navigate("/home");
       setLogId(id);
       checkPlayers(id);
@@ -37,9 +38,7 @@ const Login = () => {
   return (
     <>
       <main className="loginpage-main-container">
-        {/* <Link className="login-link" to="/home">
-        Go to Home Page
-    </Link> */}
+        {/* <Navigation /> */}
         <form className="login-form" onSubmit={(e) => handleSubmit(e)}>
           <label htmlFor="username">
             <input

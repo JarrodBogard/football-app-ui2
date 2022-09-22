@@ -1,5 +1,6 @@
 body {
   margin: 0;
+  overflow-x: hidden;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
@@ -14,37 +15,84 @@ code {
 
 /* homepage css rules */
 .homepage-main-container {
-  margin: 50px 50px;
+  background: url("../src/images/homepage-football.jpg") no-repeat center fixed;
+  background-size: cover;
+  min-width: 100vw;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  /* align-items: center; */
-}
-
-.logout-link {
-  align-self: flex-end;
 }
 
 .player-cards-list {
-  margin: 0;
+  margin: 0 75px;
   padding: 0;
-  margin-top: 100px;
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  gap: 75px;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 50px;
+  overflow-x: hidden;
 }
 
 .player-card-items {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
+  justify-content: center;
+  border-radius: 5px;
+  box-shadow: 2px 2px 4px white;
+  background-color: rgb(229 228 235 / 68%);
+}
+
+.player-card-items > p {
+  margin: 5px;
+  padding: 4px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.player-card-items > img {
+  border-radius: 50%;
+}
+
+.player-card-items > h4 {
+  font-size: 18px;
+  padding: 8px 0;
+}
+
+.player-card-items > button {
+  width: 100px;
+  margin: 8px;
+  padding: 4px;
+  color: white;
+  background-color: rgb(14, 73, 250);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.player-card-items .player-delete-button {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  color: white;
+  text-align: center;
+  background-color: rgba(255, 0, 0, 0.623);
+  cursor: pointer;
 }
 
 .player-stats-list {
   margin: 0;
   padding: 0;
+  font-weight: bold;
+  color: black;
   align-items: flex-start;
   list-style: none;
   display: flex;
@@ -53,36 +101,25 @@ code {
 
 /* addplayers page css rules  */
 .addplayer-form {
-  align-self: center;
+  display: flex;
+  margin-top: 75px;
+  margin-bottom: 25px;
+  align-items: center;
+  justify-content: center;
 }
 
 /* login page css rules  */
 
 .loginpage-main-container {
-  text-align: center;
   background: url("../src/images/login-photo.jpg") no-repeat center fixed;
   background-size: cover;
-  width: 100vw;
-  height: 100vh;
+  min-width: 100vw;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-/* .loginpage-main-container {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  background-image: url("../src/images/login-photo.jpg");
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  top: 0;
-  left: 0;
-  margin: auto;
-} */
 
 .login-form {
   display: flex;
@@ -93,6 +130,7 @@ code {
 
 .login-input {
   border: none;
+  color: white;
   border-radius: 10px;
   width: 100%;
   height: 80px;
@@ -119,4 +157,34 @@ code {
   color: white;
   align-self: center;
   background-color: #1746d5d1;
+}
+
+/* navigation page css rules   */
+.navigation-div-container {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.navigation-div-container > h1 {
+  margin: 0;
+  padding-left: 5px;
+}
+
+.navigation-div-container > a {
+  color: white;
+  text-decoration: none;
+  align-self: flex-end;
+  padding-right: 5px;
+}
+
+.details-page-div-container {
+  position: absolute;
+  /* width: 500px; */
+  /* height: 500px; */
+  border: 2px solid white;
+  color: white;
 }

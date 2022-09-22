@@ -10,10 +10,20 @@ const AddPlayerForm = () => {
     last_name: "",
   });
 
+  const [search, setSearch] = useState({
+    first_last_name: "",
+  });
+
   const handleChange = (e) => {
+    setSearch({
+      ...search,
+      first_last_name: e.target.value,
+    });
+
     setState({
       ...state,
-      [e.target.name]: e.target.value,
+      first_name: e.target.value.split(" ")[0],
+      last_name: e.target.value.split(" ")[1],
     });
   };
 
@@ -30,11 +40,16 @@ const AddPlayerForm = () => {
       first_name: "",
       last_name: "",
     });
+
+    setSearch({
+      first_last_name: "",
+    });
   };
 
   useEffect(() => {
-    // console.log(state);
-  }, [state]);
+    console.log(state);
+    console.log(search);
+  }, [state, search]);
 
   return (
     <form
@@ -44,21 +59,11 @@ const AddPlayerForm = () => {
         handleSubmit();
       }}
     >
-      <label htmlFor="first_name">
-        Search Players:{" "}
+      <label htmlFor="first_last_name">
         <input
           type="text"
-          name="first_name"
-          value={state.first_name}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <label htmlFor="last_name">
-        <input
-          type="text"
-          name="last_name"
-          value={state.last_name}
+          name="first_last_name"
+          value={search.first_last_name}
           onChange={handleChange}
           required
         />
@@ -69,3 +74,23 @@ const AddPlayerForm = () => {
 };
 
 export default AddPlayerForm;
+
+/* <label htmlFor="first_name">
+  Search Players:{" "}
+  <input
+    type="text"
+    name="first_name"
+    value={state.first_name}
+    onChange={handleChange}
+    required
+  />
+</label>
+<label htmlFor="last_name">
+  <input
+    type="text"
+    name="last_name"
+    value={state.last_name}
+    onChange={handleChange}
+    required
+  />
+</label> */

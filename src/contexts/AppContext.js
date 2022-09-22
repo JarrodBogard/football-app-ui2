@@ -5,20 +5,25 @@ export const AppContext = createContext();
 const AppContextProvider = (props) => {
   const [users, setUsers] = useState([]);
   const [players, setPlayers] = useState([]);
-  const [logId, setLogId] = useState(0);
-  // const [isLogged, setIsLogged] = useState(false);
+  const [logId, setLogId] = useState(
+    JSON.parse(localStorage.getItem("logId")) || 0
+  );
+  const [isLogged, setIsLogged] = useState(
+    JSON.parse(localStorage.getItem("isLogged")) || false
+  );
   const [loggedPlayers, setLoggedPlayers] = useState(
     JSON.parse(localStorage.getItem("loggedPlayers")) || []
   );
+  const [playerDetails, setPlayerDetails] = useState([]);
 
-  // const logUser = () => {
-  //   setIsLogged(true);
-  // };
+  const logUser = () => {
+    setIsLogged(true);
+  };
 
-  // const logOutUser = () => {
-  //   setIsLogged(false);
-  //   setLoggedPlayers([]);
-  // };
+  const logOutUser = () => {
+    setIsLogged(false);
+    setLoggedPlayers([]);
+  };
 
   const checkPlayers = (userId) => {
     const filteredPlayers = players.filter(
@@ -44,8 +49,17 @@ const AppContextProvider = (props) => {
 
   useEffect(() => {
     localStorage.setItem("loggedPlayers", JSON.stringify(loggedPlayers));
-    console.log(loggedPlayers, "set in local storage");
-  }, [loggedPlayers]);
+    localStorage.setItem("isLogged", JSON.stringify(isLogged));
+    localStorage.setItem("logId", JSON.stringify(logId));
+    console.log(loggedPlayers, isLogged, "set in local storage");
+  }, [loggedPlayers, isLogged, logId]);
+
+  const retrieveDetails = (id) => {
+    const player = loggedPlayers.find((player) => player.id === id);
+    console.log(player);
+    setPlayerDetails(player);
+    console.log(playerDetails, "playerDetails");
+  };
 
   const refetchPlayers = (userId) => {
     setTimeout(() => {
@@ -56,6 +70,12 @@ const AppContextProvider = (props) => {
           setLoggedPlayers(data);
         });
     }, 250);
+  };
+
+  const removePlayer = (playerId) => {
+    fetch(`https://football-app-beta.vercel.app/players/${playerId}`, {
+      method: "DELETE",
+    });
   };
 
   useEffect(() => {
@@ -87,19 +107,27 @@ const AppContextProvider = (props) => {
     fetchPlayerData();
   }, []);
 
+  useEffect(() => {
+    console.log(isLogged);
+  }, [isLogged]);
+
   return (
     <AppContext.Provider
       value={{
         users,
         players,
-        // logUser,
+        isLogged,
+        logUser,
         logId,
         setLogId,
         loggedPlayers,
         checkPlayers,
         refetchPlayers,
-        // logOutUser,
+        logOutUser,
         setLoggedPlayers,
+        removePlayer,
+        retrieveDetails,
+        playerDetails,
       }}
     >
       {props.children}
