@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { AppContext } from "../contexts/AppContext";
 
 const AddPlayerForm = () => {
-  const { logId, refetchPlayers } = useContext(AppContext);
+  const { logId, refetchPlayers, isToggled } = useContext(AppContext);
 
   const [state, setState] = useState({
     user_id: logId,
@@ -53,13 +53,15 @@ const AddPlayerForm = () => {
 
   return (
     <form
+      style={isToggled ? { filter: "blur(8px)" } : {}}
       className="addplayer-form"
       onSubmit={(e) => {
         e.preventDefault();
         handleSubmit();
       }}
     >
-      <label htmlFor="first_last_name">
+      <label className="search-players-label" htmlFor="first_last_name">
+        <span>Search Players:</span>
         <input
           type="text"
           name="first_last_name"
@@ -75,7 +77,7 @@ const AddPlayerForm = () => {
 
 export default AddPlayerForm;
 
-/* <label htmlFor="first_name">
+/*<label htmlFor="first_name">
   Search Players:{" "}
   <input
     type="text"
@@ -93,4 +95,4 @@ export default AddPlayerForm;
     onChange={handleChange}
     required
   />
-</label> */
+</label>*/

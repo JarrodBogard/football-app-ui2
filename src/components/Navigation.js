@@ -2,10 +2,13 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AppContext } from "../contexts/AppContext";
 const Navigation = () => {
-  const { isLogged, logOutUser } = useContext(AppContext);
+  const { isLogged, logOutUser, isToggled } = useContext(AppContext);
   console.log(isLogged);
   return isLogged ? (
-    <div className="navigation-div-container">
+    <div
+      style={isToggled ? { filter: "blur(8px)" } : {}}
+      className="navigation-div-container"
+    >
       <h1>My Football App</h1>
       <Link className="link-homepage" to="/" onClick={logOutUser}>
         LogOut

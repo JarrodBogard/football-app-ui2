@@ -1,3 +1,8 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 body {
   margin: 0;
   overflow-x: hidden;
@@ -15,12 +20,37 @@ code {
 
 /* homepage css rules */
 .homepage-main-container {
-  background: url("../src/images/homepage-football.jpg") no-repeat center fixed;
+  /* background: url("../src/images/homepage-football.jpg") no-repeat center fixed; */
   background-size: cover;
   min-width: 100vw;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  /* filter: blur(8px);
+  -webkit-filter: blur(8px); */
+  position: relative;
+}
+
+.bg-image {
+  /* The image used */
+  background: url("../src/images/homepage-football.jpg") no-repeat center fixed;
+  background-size: cover;
+  min-width: 100vw;
+  min-height: 100vh;
+  position: absolute;
+  /* z-index: 1; */
+
+  /* Add the blur effect */
+  /* filter: blur(8px);
+  -webkit-filter: blur(8px); */
+
+  /* Full height */
+  /* height: 100%; */
+
+  /* Center and scale the image nicely */
+  /* background-position: center;
+  background-repeat: no-repeat; */
+  background-size: cover;
 }
 
 .player-cards-list {
@@ -31,6 +61,7 @@ code {
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 50px;
   overflow-x: hidden;
+  /* z-index: 2; */
 }
 
 .player-card-items {
@@ -43,6 +74,8 @@ code {
   border-radius: 5px;
   box-shadow: 2px 2px 4px white;
   background-color: rgb(229 228 235 / 68%);
+  /* filter: blur(8px); */
+  /* -webkit-filter: blur(8px); */
 }
 
 .player-card-items > p {
@@ -106,6 +139,37 @@ code {
   margin-bottom: 25px;
   align-items: center;
   justify-content: center;
+  z-index: 2;
+}
+
+.search-players-label > span {
+  padding: 0 5px;
+  color: white;
+  font-weight: 500;
+}
+
+.addplayer-form > label > input {
+  width: 350px;
+  height: 1.5rem;
+  border-radius: 5px;
+}
+
+.addplayer-form > label > input:focus {
+  outline: none;
+}
+
+.addplayer-form > button {
+  margin-left: 5px;
+  padding-left: 5px;
+  border-radius: 5px;
+  background-color: rgb(14, 73, 250);
+  border: none;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  width: 100px;
+  height: 25px;
+  box-shadow: 2px 2px 4px black;
 }
 
 /* login page css rules  */
@@ -137,6 +201,7 @@ code {
   text-align: center;
   background-color: #4169e163;
   opacity: 100%;
+  font-size: 1rem;
 }
 
 .login-input:focus {
@@ -146,6 +211,7 @@ code {
 
 .login-input::placeholder {
   color: white;
+  font-size: 1rem;
 }
 
 .login-button {
@@ -167,6 +233,7 @@ code {
   left: 0;
   display: flex;
   justify-content: space-between;
+  z-index: 2;
 }
 
 .navigation-div-container > h1 {
@@ -183,8 +250,33 @@ code {
 
 .details-page-div-container {
   position: absolute;
-  /* width: 500px; */
-  /* height: 500px; */
-  border: 2px solid white;
+  /* top: calc(50% - 250px);
+  left: calc(50% - 250px); */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 500px;
+  /* border: 2px solid white; */
+  border-radius: 5px;
   color: white;
+  background-color: #180c0cfc;
+  box-shadow: 2px 2px 4px black;
+  display: inline-block;
+  padding: 15px;
+  filter: none;
+  z-index: 10;
+}
+
+.blur {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(3px);
+  z-index: 5;
+  /* filter: blur(8px);
+  -webkit-filter: blur(8px); */
 }

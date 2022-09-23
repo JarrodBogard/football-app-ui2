@@ -5,6 +5,11 @@ export const AppContext = createContext();
 const AppContextProvider = (props) => {
   const [users, setUsers] = useState([]);
   const [players, setPlayers] = useState([]);
+  const [fantasyData, setFantasyData] = useState([]);
+  const [playerData, setPlayerData] = useState(
+    JSON.parse(localStorage.getItem("playerData")) || []
+  );
+  const [isToggled, setIsToggled] = useState(false);
   const [logId, setLogId] = useState(
     JSON.parse(localStorage.getItem("logId")) || 0
   );
@@ -31,6 +36,25 @@ const AppContextProvider = (props) => {
     );
     console.log(filteredPlayers, "filteredPlayers");
     setLoggedPlayers(filteredPlayers);
+    matchedPlayers(filteredPlayers);
+  };
+
+  const matchedPlayers = (players) => {
+    let firstName = "";
+    let lastName = "[]";
+    let firstLastName = [];
+    for (const player of players) {
+      console.log(player, "--- player loop ---");
+      firstName = player.first_name;
+      lastName = player.last_name;
+      firstLastName.push(`${firstName} ${lastName}`);
+    }
+
+    const filteredFantasyData = fantasyData.filter((data) => {
+      let playerName = `${data.FirstName} ${data.LastName}`;
+      if (firstLastName.includes(playerName)) return data;
+    });
+    setPlayerData(filteredFantasyData);
   };
 
   // useEffect(() => {
@@ -51,8 +75,15 @@ const AppContextProvider = (props) => {
     localStorage.setItem("loggedPlayers", JSON.stringify(loggedPlayers));
     localStorage.setItem("isLogged", JSON.stringify(isLogged));
     localStorage.setItem("logId", JSON.stringify(logId));
-    console.log(loggedPlayers, isLogged, "set in local storage");
-  }, [loggedPlayers, isLogged, logId]);
+    localStorage.setItem("playerData", JSON.stringify(playerData));
+    console.log(
+      loggedPlayers,
+      isLogged,
+      logId,
+      playerData,
+      "set in local storage"
+    );
+  }, [loggedPlayers, isLogged, logId, playerData]);
 
   const retrieveDetails = (id) => {
     const player = loggedPlayers.find((player) => player.id === id);
@@ -103,13 +134,30 @@ const AppContextProvider = (props) => {
         })
         .then((data) => setPlayers(data))
         .catch((err) => console.log(err.message));
+
+    const fetchFantasyData = () => {
+      fetch(
+        `https://api.sportsdata.io/api/nfl/fantasy/json/Players?key=61fd0979be90419cbd6dc53c4e6f2df3`
+      )
+        .then((response) => {
+          if (!response.ok)
+            throw new Error(
+              `This is an HTTP error: The status is ${response.status}`
+            );
+          return response.json();
+        })
+        .then((data) => setFantasyData(data))
+        .catch((err) => console.log(err.message));
+    };
     fetchUserData();
     fetchPlayerData();
+    fetchFantasyData();
   }, []);
 
   useEffect(() => {
-    console.log(isLogged);
-  }, [isLogged]);
+    console.log(playerData);
+    // console.log(users, players, fantasyData);
+  }, [users, players, fantasyData, playerData]);
 
   return (
     <AppContext.Provider
@@ -128,6 +176,10 @@ const AppContextProvider = (props) => {
         removePlayer,
         retrieveDetails,
         playerDetails,
+        isToggled,
+        setIsToggled,
+        matchedPlayers,
+        playerData,
       }}
     >
       {props.children}
