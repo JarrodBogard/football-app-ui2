@@ -16,22 +16,31 @@ const Home = () => {
     playerDetails,
     isToggled,
     setIsToggled,
-    playerData
+    playerData,
   } = useContext(AppContext);
   const image =
     "https://cdn.pixabay.com/photo/2016/11/22/23/30/american-football-1851168__340.jpg";
 
-  const handleDelete = ({ id, user_id }) => {
+  console.log(loggedPlayers, "loggedPlayers");
+
+  const handleDelete = (player) => {
+    console.log(player);
+    const foundPlayer = loggedPlayers.find(
+      (el) =>
+        el.first_name === player.FirstName && el.last_name === player.LastName
+    );
+    console.log(foundPlayer, "foundPlayer");
+    const { id, user_id } = foundPlayer;
     console.log(id, user_id);
-    removePlayer(id);
-    refetchPlayers(user_id);
+    removePlayer(id, user_id);
+    // refetchPlayers(user_id);
   };
 
-  const handleDetails = ({ id }) => {
+  const handleDetails = ({ PlayerID }) => {
+    console.log(PlayerID, "handleDetails");
     const blurredDiv = document.querySelector(".blurred-background-div");
     setIsToggled(!isToggled);
-    console.log(id);
-    retrieveDetails(id);
+    retrieveDetails(PlayerID);
     blurredDiv.classList.add("blur");
   };
 
@@ -51,9 +60,9 @@ const Home = () => {
         style={isToggled ? { filter: "blur(8px)" } : {}}
       ></div>
       {/* <Navigation /> */}
-      <AddPlayerForm loggedPlayers={loggedPlayers} isToggled={isToggled} />
+      <AddPlayerForm isToggled={isToggled} />
       <ul className="player-cards-list">
-        {loggedPlayers.map((player, index) => (
+        {playerData.map((player, index) => (
           <li
             className="player-card-items"
             key={index}
@@ -66,14 +75,9 @@ const Home = () => {
               X
             </button>
             <p>
-              {player.first_name[0]}. {player.last_name}
+              {player.FirstName[0]}. {player.LastName}
             </p>
-            <img
-              width="175px"
-              height="175px"
-              src={image}
-              alt="football player holding football"
-            />
+            <img src={player.PhotoUrl} alt="football player holding football" />
             <h4 style={{ margin: 0 }}>Stats</h4>
             <ul className="player-stats-list">
               <li>Fanatsy Pts:</li>

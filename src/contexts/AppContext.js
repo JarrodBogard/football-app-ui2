@@ -39,12 +39,12 @@ const AppContextProvider = (props) => {
     matchedPlayers(filteredPlayers);
   };
 
-  const matchedPlayers = (players) => {
+  const matchedPlayers = (players = loggedPlayers) => {
     let firstName = "";
-    let lastName = "[]";
+    let lastName = "";
     let firstLastName = [];
+
     for (const player of players) {
-      console.log(player, "--- player loop ---");
       firstName = player.first_name;
       lastName = player.last_name;
       firstLastName.push(`${firstName} ${lastName}`);
@@ -53,6 +53,7 @@ const AppContextProvider = (props) => {
     const filteredFantasyData = fantasyData.filter((data) => {
       let playerName = `${data.FirstName} ${data.LastName}`;
       if (firstLastName.includes(playerName)) return data;
+      else return null;
     });
     setPlayerData(filteredFantasyData);
   };
@@ -86,27 +87,34 @@ const AppContextProvider = (props) => {
   }, [loggedPlayers, isLogged, logId, playerData]);
 
   const retrieveDetails = (id) => {
-    const player = loggedPlayers.find((player) => player.id === id);
+    console.log(id);
+    const player = playerData.find((player) => player.PlayerID === id);
     console.log(player);
     setPlayerDetails(player);
     console.log(playerDetails, "playerDetails");
   };
 
-  const refetchPlayers = (userId) => {
-    setTimeout(() => {
-      fetch(`https://football-app-beta.vercel.app/players/${userId}/users`)
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data, "refetch loggedPlayers");
-          setLoggedPlayers(data);
-        });
-    }, 250);
-  };
-
-  const removePlayer = (playerId) => {
+  const removePlayer = (playerId, userId) => {
     fetch(`https://football-app-beta.vercel.app/players/${playerId}`, {
       method: "DELETE",
-    });
+    }).then(() => refetchPlayers(userId));
+  };
+
+  const refetchPlayers = (userId) => {
+    // setTimeout(() => {
+    fetch(`https://football-app-beta.vercel.app/players/${userId}/users`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data, "refetch loggedPlayers");
+        setLoggedPlayers(data);
+        matchedPlayers(data);
+      });
+    // }, 250);
+
+    // matchedPlayers(loggedPlayers);
+    // updates fantasy data saved to playerData after adding a player to the database
+    // setTimeout(() => {
+    // }, 1000);
   };
 
   useEffect(() => {

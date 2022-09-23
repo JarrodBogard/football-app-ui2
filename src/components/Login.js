@@ -1,7 +1,6 @@
 import { useState, useContext } from "react";
 import { AppContext } from "../contexts/AppContext";
-import { Link, useNavigate } from "react-router-dom";
-import Navigation from "./Navigation";
+import {  useNavigate } from "react-router-dom";
 
 const Login = () => {
   const { users, logUser, setLogId, checkPlayers } = useContext(AppContext);
