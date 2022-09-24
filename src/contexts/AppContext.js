@@ -6,6 +6,7 @@ const AppContextProvider = (props) => {
   const [users, setUsers] = useState([]);
   const [players, setPlayers] = useState([]);
   const [fantasyData, setFantasyData] = useState([]);
+  const [playerStats, setPlayerStats] = useState([]);
   const [playerData, setPlayerData] = useState(
     JSON.parse(localStorage.getItem("playerData")) || []
   );
@@ -101,7 +102,6 @@ const AppContextProvider = (props) => {
   };
 
   const refetchPlayers = (userId) => {
-    // setTimeout(() => {
     fetch(`https://football-app-beta.vercel.app/players/${userId}/users`)
       .then((res) => res.json())
       .then((data) => {
@@ -109,12 +109,6 @@ const AppContextProvider = (props) => {
         setLoggedPlayers(data);
         matchedPlayers(data);
       });
-    // }, 250);
-
-    // matchedPlayers(loggedPlayers);
-    // updates fantasy data saved to playerData after adding a player to the database
-    // setTimeout(() => {
-    // }, 1000);
   };
 
   useEffect(() => {
@@ -157,15 +151,33 @@ const AppContextProvider = (props) => {
         .then((data) => setFantasyData(data))
         .catch((err) => console.log(err.message));
     };
+
+    const fetchFantasyStats = () => {
+      fetch(
+        `https://api.sportsdata.io/api/nfl/fantasy/json/PlayerSeasonStats/2021REG?key=61fd0979be90419cbd6dc53c4e6f2df3`
+      )
+        .then((response) => {
+          if (!response.ok)
+            throw new Error(
+              `This is an HTTP error: The status is ${response.status}`
+            );
+          return response.json();
+        })
+        .then((data) => setPlayerStats(data))
+        .catch((err) => console.log(err.message));
+    };
+
     fetchUserData();
     fetchPlayerData();
     fetchFantasyData();
+    fetchFantasyStats();
   }, []);
 
   useEffect(() => {
-    console.log(playerData);
+    console.log(playerStats);
+    // console.log(playerData);
     // console.log(users, players, fantasyData);
-  }, [users, players, fantasyData, playerData]);
+  }, [users, players, fantasyData, playerData, playerStats]);
 
   return (
     <AppContext.Provider

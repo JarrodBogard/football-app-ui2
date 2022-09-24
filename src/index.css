@@ -18,52 +18,39 @@ code {
     monospace;
 }
 
+.home-main-container, 
+
 /* homepage css rules */
 .homepage-main-container {
+  /* incase image rules aren't working/fitting properly */
   /* background: url("../src/images/homepage-football.jpg") no-repeat center fixed; */
-  background-size: cover;
-  min-width: 100vw;
+  /* background-size: cover; */
+
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  /* filter: blur(8px);
-  -webkit-filter: blur(8px); */
-  position: relative;
+
+  /* don't need
+  min-width: 100vw;
+  position: relative; */
 }
 
 .bg-image {
-  /* The image used */
   background: url("../src/images/homepage-football.jpg") no-repeat center fixed;
   background-size: cover;
   min-width: 100%;
   min-height: 100%;
   position: absolute;
-  display: flex;
-  flex-direction: column;
-  /* z-index: 1; */
-
-  /* Add the blur effect */
-  /* filter: blur(8px);
-  -webkit-filter: blur(8px); */
-
-  /* Full height */
-  /* height: 100%; */
-
-  /* Center and scale the image nicely */
-  /* background-position: center;
-  background-repeat: no-repeat; */
-  background-size: cover;
 }
 
 .player-cards-list {
-  margin: 0 75px;
-  padding: 0 0 100px 0;
+  margin: 0 75px 75px;
+  padding: 25px;
+  gap: 50px;
   list-style: none;
+  overflow-x: hidden;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 50px;
-  overflow-x: hidden;
-  /* z-index: 2; */
 }
 
 .player-card-items {
@@ -72,7 +59,6 @@ code {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  justify-content: center;
   border-radius: 5px;
   box-shadow: 2px 2px 4px white;
   background-color: rgb(229 228 235 / 68%);
@@ -162,7 +148,7 @@ code {
 
 .addplayer-form > button {
   margin-left: 5px;
-  padding-left: 5px;
+  padding: 5px;
   border-radius: 5px;
   background-color: rgb(14, 73, 250);
   border: none;
@@ -233,6 +219,7 @@ code {
   position: absolute;
   top: 0;
   left: 0;
+  padding: 10px;
   display: flex;
   justify-content: space-between;
   z-index: 2;
@@ -240,14 +227,14 @@ code {
 
 .navigation-div-container > h1 {
   margin: 0;
-  padding-left: 5px;
+  padding: 0;
 }
 
 .navigation-div-container > a {
   color: white;
   text-decoration: none;
   align-self: flex-end;
-  padding-right: 5px;
+  padding: 0;
 }
 
 .details-page-div-container {
@@ -259,7 +246,6 @@ code {
   transform: translate(-50%, -50%);
   width: 500px;
   height: 500px;
-  /* border: 2px solid white; */
   border-radius: 5px;
   color: white;
   background-color: #180c0cfc;
