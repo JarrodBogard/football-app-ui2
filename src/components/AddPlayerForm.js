@@ -53,7 +53,6 @@ const AddPlayerForm = () => {
 
   return (
     <form
-      style={isToggled ? { filter: "blur(8px)" } : {}}
       className="addplayer-form"
       onSubmit={(e) => {
         e.preventDefault();

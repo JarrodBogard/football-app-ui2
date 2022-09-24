@@ -1,43 +1,30 @@
-import { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { useContext } from "react";
 import { AppContext } from "../contexts/AppContext";
-import Navigation from "./Navigation";
+
 import AddPlayerForm from "./AddPlayerForm";
 import DetailsPage from "./DetailsPage";
 
 const Home = () => {
-  // const li = document.querySelector(".player-card-items")
-  // const [isToggled, setIsToggled] = useState(false);
   const {
     loggedPlayers,
     removePlayer,
-    refetchPlayers,
     retrieveDetails,
     playerDetails,
     isToggled,
     setIsToggled,
     playerData,
   } = useContext(AppContext);
-  const image =
-    "https://cdn.pixabay.com/photo/2016/11/22/23/30/american-football-1851168__340.jpg";
-
-  console.log(loggedPlayers, "loggedPlayers");
-
   const handleDelete = (player) => {
-    console.log(player);
     const foundPlayer = loggedPlayers.find(
       (el) =>
         el.first_name === player.FirstName && el.last_name === player.LastName
     );
-    console.log(foundPlayer, "foundPlayer");
     const { id, user_id } = foundPlayer;
-    console.log(id, user_id);
     removePlayer(id, user_id);
     // refetchPlayers(user_id);
   };
 
   const handleDetails = ({ PlayerID }) => {
-    console.log(PlayerID, "handleDetails");
     const blurredDiv = document.querySelector(".blurred-background-div");
     setIsToggled(!isToggled);
     retrieveDetails(PlayerID);
@@ -50,24 +37,16 @@ const Home = () => {
     setIsToggled(false);
   };
 
-  console.log(playerDetails, "home page details");
   return (
     <main className="homepage-main-container">
       {isToggled ? <DetailsPage player={playerDetails} /> : null}
       <div className="blurred-background-div" onClick={handleBlur}></div>
-      <div
-        className="bg-image"
-        style={isToggled ? { filter: "blur(8px)" } : {}}
-      ></div>
+      <div className="bg-image"></div>
       {/* <Navigation /> */}
       <AddPlayerForm isToggled={isToggled} />
       <ul className="player-cards-list">
         {playerData.map((player, index) => (
-          <li
-            className="player-card-items"
-            key={index}
-            style={isToggled ? { filter: "blur(8px)" } : {}}
-          >
+          <li className="player-card-items" key={index}>
             <button
               className="player-delete-button"
               onClick={() => handleDelete(player)}

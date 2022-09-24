@@ -3,7 +3,6 @@ const DetailsPage = ({ player }) => {
   return (
     <div className="details-page-div-container">
       <img
-        // style={{ width: "50px", height: "50px" }}
         src={player.PhotoUrl}
         alt={`${player.FirstName} ${player.LastName}`}
       />
