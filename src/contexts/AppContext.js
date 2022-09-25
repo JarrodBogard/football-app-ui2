@@ -1,8 +1,10 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useReducer, useState } from "react";
+import { appReducer } from "../reducers/appReducers";
 
 export const AppContext = createContext();
 
 const AppContextProvider = (props) => {
+  // const [users, dispatch] = useReducer(appReducer, [], () => {});
   const [users, setUsers] = useState([]);
   const [players, setPlayers] = useState([]);
   const [fantasyData, setFantasyData] = useState([]);
@@ -58,20 +60,6 @@ const AppContextProvider = (props) => {
     });
     setPlayerData(filteredFantasyData);
   };
-
-  // useEffect(() => {
-  //   const data = window.localStorage.getItem("loggedPlayers");
-  //   console.log(data, "------- refresh ------");
-  //   if (data !== null) setLoggedPlayers(JSON.parse(data));
-  // }, []);
-
-  // useEffect(() => {
-  //   const data = JSON.parse(localStorage.getItem("loggedPlayers"));
-  //   if (data) {
-  //     console.log(data, "on refresh");
-  //     setLoggedPlayers(data);
-  //   }
-  // }, []);
 
   useEffect(() => {
     localStorage.setItem("loggedPlayers", JSON.stringify(loggedPlayers));

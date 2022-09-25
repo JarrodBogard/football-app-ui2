@@ -143,7 +143,8 @@ code {
   margin: 4px;
   padding: 4px;
   text-align: center;
-  font-size: 14px;
+  font-size: 20px;
+  color: rgb(14, 73, 250);
 }
 
 .player-card-items > img {
@@ -190,7 +191,7 @@ code {
 .addplayer-form > label > input {
   width: 350px;
   height: 1.75rem;
-  margin: 4px;
+  margin: 0px 8px;
 }
 
 .addplayer-form > label > input:focus {
