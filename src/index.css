@@ -192,10 +192,12 @@ code {
   width: 350px;
   height: 1.75rem;
   margin: 0px 8px;
+  background: rgb(229 228 235 / 68%);
 }
 
 .addplayer-form > label > input:focus {
   outline: none;
+  background: rgb(229 228 235 / 68%);
 }
 
 .player-card-items > button {
@@ -247,7 +249,9 @@ code {
   width: 200px;
   height: 50px;
   margin-top: 4px;
+  cursor: pointer;
   border: none;
+  color: white;
   background-color: #1746d5d1;
 }
 
