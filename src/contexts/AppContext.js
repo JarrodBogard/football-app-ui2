@@ -1,13 +1,17 @@
-import { createContext, useEffect, useReducer, useState } from "react";
-import { appReducer } from "../reducers/appReducers";
+import { createContext, useEffect, useState } from "react";
 
 export const AppContext = createContext();
 
 const AppContextProvider = (props) => {
-  // const [users, dispatch] = useReducer(appReducer, [], () => {});
   const [users, setUsers] = useState([]);
   const [players, setPlayers] = useState([]);
   const [fantasyData, setFantasyData] = useState([]);
+  const [fantasyPlayerStats, setFantasyPlayerStats] = useState(
+    JSON.parse(localStorage.getItem("fantasyPlayerStats")) || []
+  );
+  const [fantasyPlayerData, setFantasyPlayerData] = useState(
+    JSON.parse(localStorage.getItem("fantasyPlayerData")) || []
+  );
   const [playerStats, setPlayerStats] = useState([]);
   const [playerData, setPlayerData] = useState(
     JSON.parse(localStorage.getItem("playerData")) || []
@@ -59,6 +63,20 @@ const AppContextProvider = (props) => {
       else return null;
     });
     setPlayerData(filteredFantasyData);
+    matchedPlayerData(filteredFantasyData);
+  };
+
+  const matchedPlayerData = (players) => {
+    console.log(players, "players in matchedPlayerData");
+    const playerIDs = [];
+    for (const player of players) playerIDs.push(player.PlayerID);
+    console.log(playerIDs);
+
+    const filteredFantasyPlayerData = fantasyPlayerData.filter((player) =>
+      playerIDs.includes(player.PlayerID)
+    );
+    console.log(filteredFantasyPlayerData, "filteredFantasyPlayerData");
+    setFantasyPlayerStats(filteredFantasyPlayerData);
   };
 
   useEffect(() => {
@@ -66,17 +84,23 @@ const AppContextProvider = (props) => {
     localStorage.setItem("isLogged", JSON.stringify(isLogged));
     localStorage.setItem("logId", JSON.stringify(logId));
     localStorage.setItem("playerData", JSON.stringify(playerData));
+    localStorage.setItem(
+      "fantasyPlayerStats",
+      JSON.stringify(fantasyPlayerStats)
+    );
     console.log(
       loggedPlayers,
       isLogged,
       logId,
       playerData,
+      fantasyPlayerStats,
       "set in local storage"
     );
-  }, [loggedPlayers, isLogged, logId, playerData]);
+  }, [loggedPlayers, isLogged, logId, playerData, fantasyPlayerStats]);
 
   const retrieveDetails = (id) => {
     console.log(id);
+    // const player = playerData.find((player) => player.PlayerID === id);
     const player = playerData.find((player) => player.PlayerID === id);
     console.log(player);
     setPlayerDetails(player);
@@ -96,6 +120,7 @@ const AppContextProvider = (props) => {
         console.log(data, "refetch loggedPlayers");
         setLoggedPlayers(data);
         matchedPlayers(data);
+        // matchedPlayerData(data);
       });
   };
 
@@ -155,17 +180,42 @@ const AppContextProvider = (props) => {
         .catch((err) => console.log(err.message));
     };
 
+    const fetchFantasyPlayerData = () =>
+      fetch(
+        `https://api.sportsdata.io/api/nfl/fantasy/json/PlayerGameProjectionStatsByWeek/2021REG/4?key=61fd0979be90419cbd6dc53c4e6f2df3`
+      )
+        .then((response) => {
+          if (!response.ok)
+            throw new Error(
+              `This is an HTTP error: The status is ${response.status}`
+            );
+          return response.json();
+        })
+        .then((data) => setFantasyPlayerData(data))
+        .catch((err) => console.log(err.message));
+
     fetchUserData();
     fetchPlayerData();
     fetchFantasyData();
     fetchFantasyStats();
+    fetchFantasyPlayerData();
   }, []);
 
   useEffect(() => {
-    console.log(playerStats);
+    console.log(fantasyPlayerData, "fantasyPlayerData");
+    console.log(fantasyPlayerStats, "fantasyPlayerStats");
+    // console.log(playerStats);
     // console.log(playerData);
     // console.log(users, players, fantasyData);
-  }, [users, players, fantasyData, playerData, playerStats]);
+  }, [
+    users,
+    players,
+    fantasyData,
+    playerData,
+    playerStats,
+    fantasyPlayerData,
+    fantasyPlayerStats,
+  ]);
 
   return (
     <AppContext.Provider
@@ -188,6 +238,8 @@ const AppContextProvider = (props) => {
         setIsToggled,
         matchedPlayers,
         playerData,
+        fantasyPlayerData,
+        fantasyPlayerStats,
       }}
     >
       {props.children}

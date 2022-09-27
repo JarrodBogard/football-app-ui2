@@ -166,14 +166,17 @@ code {
 }
 
 .player-stats-list {
-  align-items: flex-start;
   list-style: none;
   font-weight: bold;
   color: black;
 }
 
-.player-stats-list > li {
+.player-stats-list > li > p {
+  width: 110%;
   padding: 2px;
+  display: flex;
+  justify-content: center;
+  justify-content: space-between;
 }
 
 .addplayer-form {
@@ -275,6 +278,7 @@ code {
   left: 50%;
   z-index: 3;
   display: inline-block;
+  transform: translate(-50%, -50%);
   width: 500px;
   height: 500px;
   padding: 25px;
@@ -285,7 +289,6 @@ code {
   border-radius: 4px;
   background-color: #000000d4;
   box-shadow: 2px 2px 4px black;
-  transform: translate(-50%, -50%);
 }
 
 .blur {

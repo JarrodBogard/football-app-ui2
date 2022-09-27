@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { AppContext } from "../contexts/AppContext";
 
 import AddPlayerForm from "./AddPlayerForm";
+import FantasyStats from "./FantasyStats";
 import DetailsPage from "./DetailsPage";
 
 const Home = () => {
@@ -13,6 +14,7 @@ const Home = () => {
     isToggled,
     setIsToggled,
     playerData,
+    fantasyPlayerStats,
   } = useContext(AppContext);
   const handleDelete = (player) => {
     const foundPlayer = loggedPlayers.find(
@@ -39,10 +41,10 @@ const Home = () => {
 
   return (
     <main className="homepage-main-container">
-      {isToggled ? <DetailsPage player={playerDetails} /> : null}
+      {isToggled && <DetailsPage player={playerDetails} />}
+      {/* {isToggled ? <DetailsPage player={playerDetails} /> : null} */}
       <div className="blurred-background-div" onClick={handleBlur}></div>
       <div className="bg-image"></div>
-      {/* <Navigation /> */}
       <AddPlayerForm isToggled={isToggled} />
       <ul className="player-cards-list">
         {playerData.map((player, index) => (
@@ -58,11 +60,12 @@ const Home = () => {
             </p>
             <img src={player.PhotoUrl} alt="football player holding football" />
             <h4 style={{ margin: 0 }}>Stats</h4>
-            <ul className="player-stats-list">
-              <li>Fanatsy Pts:</li>
+            {/* <ul className="player-stats-list"> */}
+            <FantasyStats player={player} />
+            {/* <li>Fanatsy Pts:</li>
               <li>Targets:</li>
               <li>Predictions:</li>
-            </ul>
+            </ul> */}
             <button onClick={() => handleDetails(player)}>Details</button>
           </li>
         ))}
