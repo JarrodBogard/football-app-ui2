@@ -2,7 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import { AppContext } from "../contexts/AppContext";
 
 const AddPlayerForm = () => {
-  const { logId, refetchPlayers, isToggled } = useContext(AppContext);
+  const { logId, refetchPlayers, isToggled, matchedPlayers } =
+    useContext(AppContext);
 
   const [state, setState] = useState({
     user_id: logId,
@@ -32,9 +33,8 @@ const AddPlayerForm = () => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(state),
-    });
+    }).then(() => refetchPlayers(state.user_id));
 
-    refetchPlayers(state.user_id);
     setState({
       ...state,
       first_name: "",
@@ -53,7 +53,6 @@ const AddPlayerForm = () => {
 
   return (
     <form
-      style={isToggled ? { filter: "blur(8px)" } : {}}
       className="addplayer-form"
       onSubmit={(e) => {
         e.preventDefault();

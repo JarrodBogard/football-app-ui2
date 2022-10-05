@@ -18,71 +18,133 @@ code {
     monospace;
 }
 
-/* homepage css rules */
-.homepage-main-container {
-  /* background: url("../src/images/homepage-football.jpg") no-repeat center fixed; */
-  background-size: cover;
-  min-width: 100vw;
+.homepage-main-container,
+.loginpage-main-container {
   min-height: 100vh;
+  min-width: 100vw;
+}
+
+.bg-image,
+.player-card-items .player-delete-button,
+.details-page-div-container,
+.navigation-div-container,
+.blur {
+  position: absolute;
+}
+
+.homepage-main-container,
+.player-card-items {
+  position: relative;
+}
+
+.player-card-items,
+.player-stats-list,
+.login-form,
+.homepage-main-container,
+.loginpage-main-container {
   display: flex;
   flex-direction: column;
-  /* filter: blur(8px);
-  -webkit-filter: blur(8px); */
-  position: relative;
+}
+
+.player-card-items,
+.player-card-items > button,
+.addplayer-form > label > input,
+.addplayer-form > button,
+.login-button,
+.details-page-div-container {
+  border-radius: 5px;
+}
+
+.player-card-items,
+.player-card-items > button,
+.addplayer-form > button {
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
+  transition: 0.5s;
+}
+
+.player-card-items:hover,
+.player-card-items > button:hover,
+.addplayer-form > button:hover {
+  -moz-box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.2);
+  -webkit-box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.2);
+  box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.2);
+}
+
+.player-card-items > button,
+.player-card-items .player-delete-button,
+.search-players-label > span,
+.addplayer-form > button,
+.login-input,
+.navigation-div-container > a {
+  text-align: center;
+  color: white;
+}
+
+.player-card-items .player-delete-button,
+.navigation-div-container,
+.blur {
+  top: 0;
+  left: 0;
+}
+
+.player-card-items .player-delete-button,
+.addplayer-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.player-card-items:hover,
+.player-card-items > button:hover {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
+.player-card-items > button,
+.addplayer-form > button {
+  width: 100px;
+  height: 30px;
+  padding: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  border: none;
+  background-color: rgb(14, 73, 250);
+  box-shadow: 2px 2px 4px black;
 }
 
 .bg-image {
-  /* The image used */
   background: url("../src/images/homepage-football.jpg") no-repeat center fixed;
   background-size: cover;
-  min-width: 100vw;
-  min-height: 100vh;
-  position: absolute;
-  /* z-index: 1; */
-
-  /* Add the blur effect */
-  /* filter: blur(8px);
-  -webkit-filter: blur(8px); */
-
-  /* Full height */
-  /* height: 100%; */
-
-  /* Center and scale the image nicely */
-  /* background-position: center;
-  background-repeat: no-repeat; */
-  background-size: cover;
+  min-width: 100%;
+  min-height: 100%;
 }
 
 .player-cards-list {
-  margin: 0 75px;
-  padding: 0;
-  list-style: none;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 50px;
+  margin: 0 75px 75px;
+  padding: 25px;
+  list-style: none;
   overflow-x: hidden;
-  /* z-index: 2; */
+  font-family: fantasy;
 }
 
 .player-card-items {
-  position: relative;
-  display: flex;
-  flex-direction: column;
   align-items: center;
   text-align: center;
-  justify-content: center;
-  border-radius: 5px;
-  box-shadow: 2px 2px 4px white;
   background-color: rgb(229 228 235 / 68%);
-  /* filter: blur(8px); */
-  /* -webkit-filter: blur(8px); */
+  box-shadow: 2px 2px 4px white;
 }
 
 .player-card-items > p {
-  margin: 5px;
+  margin: 4px;
   padding: 4px;
-  font-size: 14px;
   text-align: center;
+  font-size: 20px;
+  color: rgb(14, 73, 250);
 }
 
 .player-card-items > img {
@@ -90,193 +152,149 @@ code {
 }
 
 .player-card-items > h4 {
-  font-size: 18px;
   padding: 8px 0;
-}
-
-.player-card-items > button {
-  width: 100px;
-  margin: 8px;
-  padding: 4px;
-  color: white;
-  background-color: rgb(14, 73, 250);
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+  font-size: 18px;
 }
 
 .player-card-items .player-delete-button {
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  top: 0;
-  left: 0;
   width: 20px;
   height: 20px;
-  border-radius: 50%;
-  color: white;
-  text-align: center;
-  background-color: rgba(255, 0, 0, 0.623);
   cursor: pointer;
+  border-radius: 50%;
+  background-color: rgba(255, 0, 0, 0.623);
+  box-shadow: 2px 2px 4px black;
 }
 
 .player-stats-list {
-  margin: 0;
-  padding: 0;
+  list-style: none;
   font-weight: bold;
   color: black;
-  align-items: flex-start;
-  list-style: none;
-  display: flex;
-  flex-direction: column;
 }
 
-/* addplayers page css rules  */
-.addplayer-form {
+.player-stats-list > li > p {
+  width: 110%;
+  padding: 2px;
   display: flex;
+  justify-content: center;
+  justify-content: space-between;
+}
+
+.addplayer-form {
+  z-index: 1;
   margin-top: 75px;
   margin-bottom: 25px;
-  align-items: center;
-  justify-content: center;
-  z-index: 2;
 }
 
 .search-players-label > span {
-  padding: 0 5px;
-  color: white;
+  font-size: 18px;
   font-weight: 500;
+  font-family: unset;
 }
 
 .addplayer-form > label > input {
   width: 350px;
-  height: 1.5rem;
-  border-radius: 5px;
+  height: 1.75rem;
+  margin: 0px 8px;
+  background: rgb(229 228 235 / 68%);
 }
 
 .addplayer-form > label > input:focus {
   outline: none;
+  background: rgb(229 228 235 / 68%);
 }
 
+.player-card-items > button {
+  margin: 8px;
+}
 .addplayer-form > button {
-  margin-left: 5px;
-  padding-left: 5px;
-  border-radius: 5px;
-  background-color: rgb(14, 73, 250);
-  border: none;
-  font-weight: bold;
-  color: white;
-  text-align: center;
-  width: 100px;
-  height: 25px;
-  box-shadow: 2px 2px 4px black;
+  font-family: unset;
 }
 
-/* login page css rules  */
+.addplayer-form > button:hover {
+  -webkit-transform: scale(1.05);
+  transform: scale(1.05);
+}
 
 .loginpage-main-container {
   background: url("../src/images/login-photo.jpg") no-repeat center fixed;
   background-size: cover;
-  min-width: 100vw;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
 .login-form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
   width: 400px;
+  gap: 10px;
 }
 
 .login-input {
-  border: none;
-  color: white;
-  border-radius: 10px;
   width: 100%;
   height: 80px;
-  text-align: center;
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
   background-color: #4169e163;
   opacity: 100%;
-  font-size: 1rem;
 }
 
 .login-input:focus {
-  color: white;
   outline: 0.1rem solid white;
+  color: white;
 }
 
 .login-input::placeholder {
-  color: white;
   font-size: 1rem;
+  color: white;
 }
 
 .login-button {
-  margin-top: 5px;
-  border: none;
-  border-radius: 5px;
+  align-self: center;
   width: 200px;
   height: 50px;
+  margin-top: 4px;
+  cursor: pointer;
+  border: none;
   color: white;
-  align-self: center;
   background-color: #1746d5d1;
 }
 
-/* navigation page css rules   */
 .navigation-div-container {
-  width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
+  z-index: 1;
   display: flex;
   justify-content: space-between;
-  z-index: 2;
-}
-
-.navigation-div-container > h1 {
-  margin: 0;
-  padding-left: 5px;
+  width: 100%;
+  padding: 10px;
+  font-family: fantasy;
 }
 
 .navigation-div-container > a {
-  color: white;
-  text-decoration: none;
   align-self: flex-end;
-  padding-right: 5px;
+  font-size: 18px;
+  text-decoration: none;
 }
 
 .details-page-div-container {
-  position: absolute;
-  /* top: calc(50% - 250px);
-  left: calc(50% - 250px); */
   top: 50%;
   left: 50%;
+  z-index: 3;
+  display: inline-block;
   transform: translate(-50%, -50%);
   width: 500px;
   height: 500px;
-  /* border: 2px solid white; */
-  border-radius: 5px;
-  color: white;
-  background-color: #180c0cfc;
-  box-shadow: 2px 2px 4px black;
-  display: inline-block;
-  padding: 15px;
+  padding: 25px;
+  font-size: 18px;
+  font-family: emoji;
   filter: none;
-  z-index: 10;
+  color: white;
+  border-radius: 4px;
+  background-color: #000000d4;
+  box-shadow: 2px 2px 4px black;
 }
 
 .blur {
-  position: absolute;
-  top: 0;
-  left: 0;
+  z-index: 2;
   width: 100%;
   height: 100%;
+  backdrop-filter: blur(4px);
   background-color: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(3px);
-  z-index: 5;
-  /* filter: blur(8px);
-  -webkit-filter: blur(8px); */
 }

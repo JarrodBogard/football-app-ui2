@@ -6,6 +6,13 @@ const AppContextProvider = (props) => {
   const [users, setUsers] = useState([]);
   const [players, setPlayers] = useState([]);
   const [fantasyData, setFantasyData] = useState([]);
+  const [fantasyPlayerStats, setFantasyPlayerStats] = useState(
+    JSON.parse(localStorage.getItem("fantasyPlayerStats")) || []
+  );
+  const [fantasyPlayerData, setFantasyPlayerData] = useState(
+    JSON.parse(localStorage.getItem("fantasyPlayerData")) || []
+  );
+  const [playerStats, setPlayerStats] = useState([]);
   const [playerData, setPlayerData] = useState(
     JSON.parse(localStorage.getItem("playerData")) || []
   );
@@ -39,12 +46,12 @@ const AppContextProvider = (props) => {
     matchedPlayers(filteredPlayers);
   };
 
-  const matchedPlayers = (players) => {
+  const matchedPlayers = (players = loggedPlayers) => {
     let firstName = "";
-    let lastName = "[]";
+    let lastName = "";
     let firstLastName = [];
+
     for (const player of players) {
-      console.log(player, "--- player loop ---");
       firstName = player.first_name;
       lastName = player.last_name;
       firstLastName.push(`${firstName} ${lastName}`);
@@ -53,60 +60,68 @@ const AppContextProvider = (props) => {
     const filteredFantasyData = fantasyData.filter((data) => {
       let playerName = `${data.FirstName} ${data.LastName}`;
       if (firstLastName.includes(playerName)) return data;
+      else return null;
     });
     setPlayerData(filteredFantasyData);
+    matchedPlayerData(filteredFantasyData);
   };
 
-  // useEffect(() => {
-  //   const data = window.localStorage.getItem("loggedPlayers");
-  //   console.log(data, "------- refresh ------");
-  //   if (data !== null) setLoggedPlayers(JSON.parse(data));
-  // }, []);
+  const matchedPlayerData = (players) => {
+    console.log(players, "players in matchedPlayerData");
+    const playerIDs = [];
+    for (const player of players) playerIDs.push(player.PlayerID);
+    console.log(playerIDs);
 
-  // useEffect(() => {
-  //   const data = JSON.parse(localStorage.getItem("loggedPlayers"));
-  //   if (data) {
-  //     console.log(data, "on refresh");
-  //     setLoggedPlayers(data);
-  //   }
-  // }, []);
+    const filteredFantasyPlayerData = fantasyPlayerData.filter((player) =>
+      playerIDs.includes(player.PlayerID)
+    );
+    console.log(filteredFantasyPlayerData, "filteredFantasyPlayerData");
+    setFantasyPlayerStats(filteredFantasyPlayerData);
+  };
 
   useEffect(() => {
     localStorage.setItem("loggedPlayers", JSON.stringify(loggedPlayers));
     localStorage.setItem("isLogged", JSON.stringify(isLogged));
     localStorage.setItem("logId", JSON.stringify(logId));
     localStorage.setItem("playerData", JSON.stringify(playerData));
+    localStorage.setItem(
+      "fantasyPlayerStats",
+      JSON.stringify(fantasyPlayerStats)
+    );
     console.log(
       loggedPlayers,
       isLogged,
       logId,
       playerData,
+      fantasyPlayerStats,
       "set in local storage"
     );
-  }, [loggedPlayers, isLogged, logId, playerData]);
+  }, [loggedPlayers, isLogged, logId, playerData, fantasyPlayerStats]);
 
   const retrieveDetails = (id) => {
-    const player = loggedPlayers.find((player) => player.id === id);
+    console.log(id);
+    // const player = playerData.find((player) => player.PlayerID === id);
+    const player = playerData.find((player) => player.PlayerID === id);
     console.log(player);
     setPlayerDetails(player);
     console.log(playerDetails, "playerDetails");
   };
 
-  const refetchPlayers = (userId) => {
-    setTimeout(() => {
-      fetch(`https://football-app-beta.vercel.app/players/${userId}/users`)
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data, "refetch loggedPlayers");
-          setLoggedPlayers(data);
-        });
-    }, 250);
-  };
-
-  const removePlayer = (playerId) => {
+  const removePlayer = (playerId, userId) => {
     fetch(`https://football-app-beta.vercel.app/players/${playerId}`, {
       method: "DELETE",
-    });
+    }).then(() => refetchPlayers(userId));
+  };
+
+  const refetchPlayers = (userId) => {
+    fetch(`https://football-app-beta.vercel.app/players/${userId}/users`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data, "refetch loggedPlayers");
+        setLoggedPlayers(data);
+        matchedPlayers(data);
+        // matchedPlayerData(data);
+      });
   };
 
   useEffect(() => {
@@ -149,15 +164,58 @@ const AppContextProvider = (props) => {
         .then((data) => setFantasyData(data))
         .catch((err) => console.log(err.message));
     };
+
+    const fetchFantasyStats = () => {
+      fetch(
+        `https://api.sportsdata.io/api/nfl/fantasy/json/PlayerSeasonStats/2021REG?key=61fd0979be90419cbd6dc53c4e6f2df3`
+      )
+        .then((response) => {
+          if (!response.ok)
+            throw new Error(
+              `This is an HTTP error: The status is ${response.status}`
+            );
+          return response.json();
+        })
+        .then((data) => setPlayerStats(data))
+        .catch((err) => console.log(err.message));
+    };
+
+    const fetchFantasyPlayerData = () =>
+      fetch(
+        `https://api.sportsdata.io/api/nfl/fantasy/json/PlayerGameProjectionStatsByWeek/2021REG/4?key=61fd0979be90419cbd6dc53c4e6f2df3`
+      )
+        .then((response) => {
+          if (!response.ok)
+            throw new Error(
+              `This is an HTTP error: The status is ${response.status}`
+            );
+          return response.json();
+        })
+        .then((data) => setFantasyPlayerData(data))
+        .catch((err) => console.log(err.message));
+
     fetchUserData();
     fetchPlayerData();
     fetchFantasyData();
+    fetchFantasyStats();
+    fetchFantasyPlayerData();
   }, []);
 
   useEffect(() => {
-    console.log(playerData);
+    console.log(fantasyPlayerData, "fantasyPlayerData");
+    console.log(fantasyPlayerStats, "fantasyPlayerStats");
+    // console.log(playerStats);
+    // console.log(playerData);
     // console.log(users, players, fantasyData);
-  }, [users, players, fantasyData, playerData]);
+  }, [
+    users,
+    players,
+    fantasyData,
+    playerData,
+    playerStats,
+    fantasyPlayerData,
+    fantasyPlayerStats,
+  ]);
 
   return (
     <AppContext.Provider
@@ -180,6 +238,8 @@ const AppContextProvider = (props) => {
         setIsToggled,
         matchedPlayers,
         playerData,
+        fantasyPlayerData,
+        fantasyPlayerStats,
       }}
     >
       {props.children}

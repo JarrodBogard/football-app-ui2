@@ -1,7 +1,6 @@
 import { useState, useContext } from "react";
 import { AppContext } from "../contexts/AppContext";
-import { Link, useNavigate } from "react-router-dom";
-import Navigation from "./Navigation";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const { users, logUser, setLogId, checkPlayers } = useContext(AppContext);
@@ -36,37 +35,34 @@ const Login = () => {
   };
 
   return (
-    <>
-      <main className="loginpage-main-container">
-        {/* <Navigation /> */}
-        <form className="login-form" onSubmit={(e) => handleSubmit(e)}>
-          <label htmlFor="username">
-            <input
-              className="login-input"
-              onChange={(e) => handleChange(e)}
-              type="text"
-              name="loginName"
-              value={state.loginName}
-              placeholder="Username"
-              autoComplete="off"
-              required
-            />
-          </label>
-          <label htmlFor="password">
-            <input
-              className="login-input"
-              onChange={(e) => handleChange(e)}
-              type="password"
-              name="loginPass"
-              value={state.loginPass}
-              placeholder="Password"
-              required
-            />
-          </label>
-          <button className="login-button">Login</button>
-        </form>
-      </main>
-    </>
+    <main className="loginpage-main-container">
+      <form className="login-form" onSubmit={(e) => handleSubmit(e)}>
+        <label htmlFor="username">
+          <input
+            className="login-input"
+            onChange={(e) => handleChange(e)}
+            type="text"
+            name="loginName"
+            value={state.loginName}
+            placeholder="Username"
+            autoComplete="off"
+            required
+          />
+        </label>
+        <label htmlFor="password">
+          <input
+            className="login-input"
+            onChange={(e) => handleChange(e)}
+            type="password"
+            name="loginPass"
+            value={state.loginPass}
+            placeholder="Password"
+            required
+          />
+        </label>
+        <button className="login-button">Login</button>
+      </form>
+    </main>
   );
 };
 
