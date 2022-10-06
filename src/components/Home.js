@@ -7,6 +7,7 @@ import DetailsPage from "./DetailsPage";
 
 const Home = () => {
   const {
+    users,
     loggedPlayers,
     removePlayer,
     retrieveDetails,
@@ -14,8 +15,9 @@ const Home = () => {
     isToggled,
     setIsToggled,
     playerData,
-    fantasyPlayerStats,
   } = useContext(AppContext);
+
+  console.log(users, "homepage");
   const handleDelete = (player) => {
     const foundPlayer = loggedPlayers.find(
       (el) =>
