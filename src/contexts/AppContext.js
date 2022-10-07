@@ -204,7 +204,7 @@ const AppContextProvider = (props) => {
 
   useEffect(() => {
     // console.log(fantasyPlayerData, "fantasyPlayerData");
-    // console.log(fantasyPlayerStats, "fantasyPlayerStats");
+    console.log(fantasyPlayerStats, "fantasyPlayerStats");
     // console.log(playerStats);
     // console.log(playerData);
     // console.log(users, players, fantasyData);
