@@ -3,12 +3,12 @@ import { AppContext } from "../contexts/AppContext";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const { users, logUser, setLogId, checkPlayers } = useContext(AppContext);
+  const { users, logUser, setLogId, checkPlayers, refetchPlayers } =
+    useContext(AppContext);
   const navigate = useNavigate();
   const [state, setState] = useState({
-    username: "",
-    password: "",
-    email: "test@mail.com",
+    loginName: "",
+    loginPass: "",
   });
 
   const handleChange = (e) => {
@@ -22,56 +22,17 @@ const Login = () => {
     e.preventDefault();
     const loggedUser = users.find(
       (user) =>
-        state.username === user.username && state.password === user.password
+        state.loginName === user.username && state.loginPass === user.password
     );
-<<<<<<< HEAD
     const { id } = loggedUser;
-=======
->>>>>>> 62941b3cc70cc51a289f8dc0be4274fb07c34585
 
     if (loggedUser) {
-      const { id } = loggedUser;
-      console.log(id);
       logUser();
       setLogId(id);
       checkPlayers(id);
+      refetchPlayers(id);
       navigate("/home");
     }
-
-    if (!loggedUser) {
-      console.log("fired not logged");
-      fetch(`https://football-app-beta.vercel.app/users`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(state),
-      }).then(() => {
-        logUser();
-        navigate("/home");
-        const foundUser = users.find(
-          (user) =>
-            state.username === user.username && state.password === user.password
-        );
-        const { id } = foundUser;
-        setLogId(id);
-        checkPlayers(id);
-      });
-    }
-
-    // if (!loggedUser) {
-    //   console.log("fired not logged");
-    //   fetch(`https://football-app-beta.vercel.app/users`, {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify(state),
-    //   }).then(() => {
-    //     logUser();
-    //     navigate("/home");
-    //     const foundUser = users.find((user) => user.id === users.length);
-    //     const { id } = foundUser;
-    //     setLogId(id);
-    //     checkPlayers(id);
-    //   });
-    // }
   };
 
   return (
@@ -82,8 +43,8 @@ const Login = () => {
             className="login-input"
             onChange={(e) => handleChange(e)}
             type="text"
-            name="username"
-            value={state.username}
+            name="loginName"
+            value={state.loginName}
             placeholder="Username"
             autoComplete="off"
             required
@@ -94,8 +55,8 @@ const Login = () => {
             className="login-input"
             onChange={(e) => handleChange(e)}
             type="password"
-            name="password"
-            value={state.password}
+            name="loginPass"
+            value={state.loginPass}
             placeholder="Password"
             required
           />

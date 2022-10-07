@@ -95,10 +95,6 @@ const AppContextProvider = (props) => {
   }, [loggedPlayers, isLogged, logId, playerData, fantasyPlayerStats]);
 
   const retrieveDetails = (id) => {
-<<<<<<< HEAD
-=======
-    // const player = playerData.find((player) => player.PlayerID === id);
->>>>>>> 62941b3cc70cc51a289f8dc0be4274fb07c34585
     const player = playerData.find((player) => player.PlayerID === id);
     setPlayerDetails(player);
   };
@@ -116,15 +112,6 @@ const AppContextProvider = (props) => {
         setLoggedPlayers(data);
         matchedPlayers(data);
         // matchedPlayerData(data);
-      });
-  };
-
-  const refetchUsers = () => {
-    fetch(`https://football-app-beta.vercel.app/users`)
-      .then((res) => res.json())
-      .then((data) => {
-        setUsers(data);
-        console.log(users, "users data context page");
       });
   };
 
@@ -232,7 +219,6 @@ const AppContextProvider = (props) => {
         setLogId,
         loggedPlayers,
         checkPlayers,
-        refetchUsers,
         refetchPlayers,
         logOutUser,
         setLoggedPlayers,
