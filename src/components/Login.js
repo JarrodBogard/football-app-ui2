@@ -6,9 +6,8 @@ const Login = () => {
   const { users, logUser, setLogId, checkPlayers } = useContext(AppContext);
   const navigate = useNavigate();
   const [state, setState] = useState({
-    username: "",
-    password: "",
-    email: "test@mail.com",
+    loginName: "",
+    loginPass: "",
   });
 
   const handleChange = (e) => {
@@ -22,52 +21,17 @@ const Login = () => {
     e.preventDefault();
     const loggedUser = users.find(
       (user) =>
-        state.username === user.username && state.password === user.password
+        state.loginName === user.username && state.loginPass === user.password
     );
+    const { id } = loggedUser;
+    console.log(id);
 
     if (loggedUser) {
-      const { id } = loggedUser;
-      console.log(id);
       logUser();
       navigate("/home");
       setLogId(id);
       checkPlayers(id);
     }
-
-    if (!loggedUser) {
-      console.log("fired not logged");
-      fetch(`https://football-app-beta.vercel.app/users`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(state),
-      }).then(() => {
-        logUser();
-        navigate("/home");
-        const foundUser = users.find(
-          (user) =>
-            state.username === user.username && state.password === user.password
-        );
-        const { id } = foundUser;
-        setLogId(id);
-        checkPlayers(id);
-      });
-    }
-
-    // if (!loggedUser) {
-    //   console.log("fired not logged");
-    //   fetch(`https://football-app-beta.vercel.app/users`, {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify(state),
-    //   }).then(() => {
-    //     logUser();
-    //     navigate("/home");
-    //     const foundUser = users.find((user) => user.id === users.length);
-    //     const { id } = foundUser;
-    //     setLogId(id);
-    //     checkPlayers(id);
-    //   });
-    // }
   };
 
   return (
@@ -78,8 +42,8 @@ const Login = () => {
             className="login-input"
             onChange={(e) => handleChange(e)}
             type="text"
-            name="username"
-            value={state.username}
+            name="loginName"
+            value={state.loginName}
             placeholder="Username"
             autoComplete="off"
             required
@@ -90,8 +54,8 @@ const Login = () => {
             className="login-input"
             onChange={(e) => handleChange(e)}
             type="password"
-            name="password"
-            value={state.password}
+            name="loginPass"
+            value={state.loginPass}
             placeholder="Password"
             required
           />
