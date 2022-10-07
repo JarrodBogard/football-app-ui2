@@ -5,7 +5,6 @@ import { AppContext } from "../contexts/AppContext";
 
 const DetailsPage = ({ player }) => {
   const { fantasyPlayerStats } = useContext(AppContext);
-  console.log(fantasyPlayerStats, "details page");
 
   const foundPlayer = fantasyPlayerStats.find(
     (fantasyPlayer) => fantasyPlayer.PlayerID === player.PlayerID
@@ -24,7 +23,7 @@ const DetailsPage = ({ player }) => {
       />
       <p>
         {player.FirstName} {player.LastName} (
-        {player.InjuryStatus === null ? "Healthy" : "Injured"})
+        {player.InjuryStatus === null ? "Healthy" : "Questionnable"})
       </p>
       <ul style={{ listStyle: "none" }}>
         <li>Team: {player.Team}</li>
