@@ -24,13 +24,12 @@ const Login = () => {
         state.loginName === user.username && state.loginPass === user.password
     );
     const { id } = loggedUser;
-    console.log(id);
 
     if (loggedUser) {
       logUser();
-      navigate("/home");
       setLogId(id);
       checkPlayers(id);
+      navigate("/home");
     }
   };
 

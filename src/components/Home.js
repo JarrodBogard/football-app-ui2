@@ -14,7 +14,6 @@ const Home = () => {
     isToggled,
     setIsToggled,
     playerData,
-    fantasyPlayerStats,
   } = useContext(AppContext);
   const handleDelete = (player) => {
     const foundPlayer = loggedPlayers.find(
@@ -60,12 +59,7 @@ const Home = () => {
             </p>
             <img src={player.PhotoUrl} alt="football player holding football" />
             <h4 style={{ margin: 0 }}>Stats</h4>
-            {/* <ul className="player-stats-list"> */}
             <FantasyStats player={player} />
-            {/* <li>Fanatsy Pts:</li>
-              <li>Targets:</li>
-              <li>Predictions:</li>
-            </ul> */}
             <button onClick={() => handleDetails(player)}>Details</button>
           </li>
         ))}
