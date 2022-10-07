@@ -6,8 +6,9 @@ const Login = () => {
   const { users, logUser, setLogId, checkPlayers } = useContext(AppContext);
   const navigate = useNavigate();
   const [state, setState] = useState({
-    loginName: "",
-    loginPass: "",
+    username: "",
+    password: "",
+    email: "test@mail.com",
   });
 
   const handleChange = (e) => {
@@ -21,16 +22,56 @@ const Login = () => {
     e.preventDefault();
     const loggedUser = users.find(
       (user) =>
-        state.loginName === user.username && state.loginPass === user.password
+        state.username === user.username && state.password === user.password
     );
+<<<<<<< HEAD
     const { id } = loggedUser;
+=======
+>>>>>>> 62941b3cc70cc51a289f8dc0be4274fb07c34585
 
     if (loggedUser) {
+      const { id } = loggedUser;
+      console.log(id);
       logUser();
       setLogId(id);
       checkPlayers(id);
       navigate("/home");
     }
+
+    if (!loggedUser) {
+      console.log("fired not logged");
+      fetch(`https://football-app-beta.vercel.app/users`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(state),
+      }).then(() => {
+        logUser();
+        navigate("/home");
+        const foundUser = users.find(
+          (user) =>
+            state.username === user.username && state.password === user.password
+        );
+        const { id } = foundUser;
+        setLogId(id);
+        checkPlayers(id);
+      });
+    }
+
+    // if (!loggedUser) {
+    //   console.log("fired not logged");
+    //   fetch(`https://football-app-beta.vercel.app/users`, {
+    //     method: "POST",
+    //     headers: { "Content-Type": "application/json" },
+    //     body: JSON.stringify(state),
+    //   }).then(() => {
+    //     logUser();
+    //     navigate("/home");
+    //     const foundUser = users.find((user) => user.id === users.length);
+    //     const { id } = foundUser;
+    //     setLogId(id);
+    //     checkPlayers(id);
+    //   });
+    // }
   };
 
   return (
@@ -41,8 +82,8 @@ const Login = () => {
             className="login-input"
             onChange={(e) => handleChange(e)}
             type="text"
-            name="loginName"
-            value={state.loginName}
+            name="username"
+            value={state.username}
             placeholder="Username"
             autoComplete="off"
             required
@@ -53,8 +94,8 @@ const Login = () => {
             className="login-input"
             onChange={(e) => handleChange(e)}
             type="password"
-            name="loginPass"
-            value={state.loginPass}
+            name="password"
+            value={state.password}
             placeholder="Password"
             required
           />
