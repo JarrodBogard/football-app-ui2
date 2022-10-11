@@ -3,8 +3,7 @@ import { AppContext } from "../contexts/AppContext";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const { users, logUser, setLogId, checkPlayers, refetchPlayers } =
-    useContext(AppContext);
+  const { users, logUser, setLogId, checkPlayers } = useContext(AppContext);
   const navigate = useNavigate();
   const [state, setState] = useState({
     loginName: "",
@@ -29,9 +28,9 @@ const Login = () => {
       const { id } = loggedUser;
       logUser();
       setLogId(id);
-      checkPlayers(id);
-      refetchPlayers(id);
       navigate("/home");
+      checkPlayers(id);
+      // refetchPlayers(id);
     }
     // if (loggedUser) {
     //   const { id } = loggedUser;
