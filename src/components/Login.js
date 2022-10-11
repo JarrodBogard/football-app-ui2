@@ -23,15 +23,25 @@ const Login = () => {
       (user) =>
         state.loginName === user.username && state.loginPass === user.password
     );
-    const { id } = loggedUser;
-    console.log(id);
 
     if (loggedUser) {
+      const { id } = loggedUser;
       logUser();
       navigate("/home");
       setLogId(id);
       checkPlayers(id);
     }
+    // if (loggedUser) {
+    //   const { id } = loggedUser;
+    //   fetch(`https://football-app-beta.vercel.app/players/${id}/users`).then(
+    //     () => {
+    //       logUser();
+    //       navigate("/home");
+    //       setLogId(id);
+    //       checkPlayers(id);
+    //     }
+    //   );
+    // }
   };
 
   return (
@@ -45,7 +55,7 @@ const Login = () => {
             name="loginName"
             value={state.loginName}
             placeholder="Username"
-            autoComplete="off"
+            autoComplete="false"
             required
           />
         </label>
@@ -57,6 +67,7 @@ const Login = () => {
             name="loginPass"
             value={state.loginPass}
             placeholder="Password"
+            autoComplete="false"
             required
           />
         </label>

@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { AppContext } from "../contexts/AppContext";
 const Navigation = () => {
   const { isLogged, logOutUser } = useContext(AppContext);
-  console.log(isLogged);
   return isLogged ? (
     <div className="navigation-div-container">
       <h1>My Football App</h1>

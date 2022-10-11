@@ -2,8 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { AppContext } from "../contexts/AppContext";
 
 const AddPlayerForm = () => {
-  const { logId, refetchPlayers, isToggled, matchedPlayers } =
-    useContext(AppContext);
+  const { logId, refetchPlayers } = useContext(AppContext);
 
   const [state, setState] = useState({
     user_id: logId,
@@ -47,8 +46,8 @@ const AddPlayerForm = () => {
   };
 
   useEffect(() => {
-    console.log(state);
-    console.log(search);
+    // console.log(state);
+    // console.log(search);
   }, [state, search]);
 
   return (

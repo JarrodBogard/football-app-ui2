@@ -5,9 +5,9 @@ const FantasyStats = (props) => {
   const { fantasyPlayerStats } = useContext(AppContext);
 
   return (
-    <ul className="player-stats-list">
-      {fantasyPlayerStats.map((player) => (
-        <>
+    <>
+      {fantasyPlayerStats.map((player, index) => (
+        <ul key={index} className="player-stats-list">
           {player.PlayerID === props.player.PlayerID ? (
             <li className="homepage-list-items">
               <p>
@@ -16,7 +16,14 @@ const FantasyStats = (props) => {
               </p>
               <p>
                 <span>Status:</span>
-                <span className="list-span">
+                <span
+                  className="list-status"
+                  style={
+                    player.InjuryStatus === null
+                      ? { color: "green" }
+                      : { color: "red" }
+                  }
+                >
                   {player.InjuryStatus === null ? "Healthy" : "Injured"}
                 </span>
               </p>
@@ -26,34 +33,9 @@ const FantasyStats = (props) => {
               </p>
             </li>
           ) : null}
-          {/* {player.PlayerID === props.player.PlayerID ? (
-              <>
-              <p>Fantasy Pts: {player.FantasyPoints}</p>
-              <p>Status: {player.InjuryStatus}</p>
-              <p>Next Game: {player.HomeOrAway}</p>
-              </>
-            ) : null} */}
-          {/* <p>
-            {player.PlayerID === props.player.PlayerID
-                ? `Fantasy Pts: ${player.FantasyPoints}`
-                : null}
-                </p>
-                <p>
-                {player.PlayerID === props.player.PlayerID
-                    ? `Status: ${
-                        player.InjuryStatus === null ? "Healthy" : "Injured"
-                    }`
-                    : null}
-                    </p>
-                    <p>
-                    {player.PlayerID === props.player.PlayerID
-                        ? `Next Game: ${player.Opponent} (${player.HomeOrAway})`
-                        : null}
-                    </p> */}
-          {/* </li> */}
-        </>
+        </ul>
       ))}
-    </ul>
+    </>
   );
 };
 

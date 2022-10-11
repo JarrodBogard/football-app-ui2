@@ -1,26 +1,19 @@
 import { useContext } from "react";
-import { fadeIn, fadeOut } from "react-animations";
+import { fadeIn } from "react-animations";
 import styled, { keyframes } from "styled-components";
 import { AppContext } from "../contexts/AppContext";
 
 const DetailsPage = ({ player }) => {
   const { fantasyPlayerStats } = useContext(AppContext);
-  console.log(fantasyPlayerStats, "details page");
 
   const foundPlayer = fantasyPlayerStats.find(
     (fantasyPlayer) => fantasyPlayer.PlayerID === player.PlayerID
   );
-  console.log(foundPlayer);
 
   const fadeInAnimation = keyframes`${fadeIn}`;
   const FadeInDiv = styled.div`
     animation: 1s ${fadeInAnimation};
   `;
-
-  // const fadeOutAnimation = keyframes`${fadeOut}`;
-  // const FadeOutDiv = styled.div`
-  //   animation: 1s ${fadeOutAnimation};
-  // `;
 
   return (
     <FadeInDiv className="details-page-div-container">
