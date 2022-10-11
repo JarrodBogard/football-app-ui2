@@ -7,6 +7,7 @@ import DetailsPage from "./DetailsPage";
 
 const Home = () => {
   const {
+    users,
     loggedPlayers,
     removePlayer,
     retrieveDetails,

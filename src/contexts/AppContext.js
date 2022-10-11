@@ -73,7 +73,6 @@ const AppContextProvider = (props) => {
     const filteredFantasyPlayerData = fantasyPlayerData.filter((player) =>
       playerIDs.includes(player.PlayerID)
     );
-
     setFantasyPlayerStats(filteredFantasyPlayerData);
   };
 
