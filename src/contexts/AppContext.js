@@ -41,9 +41,9 @@ const AppContextProvider = (props) => {
     const filteredPlayers = players.filter(
       (player) => player.user_id === userId
     );
+
     setLoggedPlayers(filteredPlayers);
     matchedPlayers(filteredPlayers);
-    // refetchPlayers(userId);
   };
 
   const matchedPlayers = (players = loggedPlayers) => {
@@ -112,7 +112,9 @@ const AppContextProvider = (props) => {
       .then((data) => {
         setLoggedPlayers(data);
         matchedPlayers(data);
-        // matchedPlayerData(data);
+        fetch(`https://football-app-beta.vercel.app/players`)
+          .then((res) => res.json())
+          .then((data) => setPlayers(data));
       });
   };
 
@@ -194,11 +196,13 @@ const AppContextProvider = (props) => {
   }, []);
 
   useEffect(() => {
+    // console.log(loggedPlayers, "loggedPlayers in useEffect");
     // console.log(fantasyPlayerData, "fantasyPlayerData");
     // console.log(fantasyPlayerStats, "fantasyPlayerStats");
     // console.log(playerStats);
     // console.log(playerData);
     // console.log(users, players, fantasyData);
+    // console.log(players, "players in useEffect");
   }, [
     users,
     players,
@@ -207,6 +211,7 @@ const AppContextProvider = (props) => {
     playerStats,
     fantasyPlayerData,
     fantasyPlayerStats,
+    loggedPlayers,
   ]);
 
   return (
@@ -222,7 +227,6 @@ const AppContextProvider = (props) => {
         checkPlayers,
         refetchPlayers,
         logOutUser,
-        setLoggedPlayers,
         removePlayer,
         retrieveDetails,
         playerDetails,

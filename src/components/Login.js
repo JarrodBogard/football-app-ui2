@@ -24,13 +24,13 @@ const Login = () => {
         state.loginName === user.username && state.loginPass === user.password
     );
 
+    // const { id } = loggedUser;
+
     if (loggedUser) {
-      const { id } = loggedUser;
       logUser();
-      setLogId(id);
+      setLogId(loggedUser.id);
       navigate("/home");
-      checkPlayers(id);
-      // refetchPlayers(id);
+      checkPlayers(loggedUser.id);
     }
     // if (loggedUser) {
     //   const { id } = loggedUser;

@@ -129,7 +129,7 @@ code {
   padding: 25px;
   list-style: none;
   overflow-x: hidden;
-  /* font-family: fantasy; */
+  font-family: fantasy;
 }
 
 .player-card-items {
